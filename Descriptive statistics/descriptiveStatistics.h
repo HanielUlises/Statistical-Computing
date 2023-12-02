@@ -16,6 +16,6 @@ private:
     const std::array<T, N> data;
 };
 
-#include "StaticStatistics.cpp"
+#include "descriptiveStatistics.cpp"
 
 #endif // STATIC_STATISTICS_H
