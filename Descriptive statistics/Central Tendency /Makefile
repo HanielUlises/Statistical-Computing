@@ -4,16 +4,16 @@ INCLUDES = -I/home/haniel/Libraries/ETL
 
 TARGET = stats_app
 
-OBJECTS = main.o csv_utilities.o dynamic_statistics.o
+OBJECTS = main.o CSVUtilities.o dynamic_statistics.o
 
-CSV_UTILITIES_SRC = /home/haniel/Libraries/ETL/csv_utilities.cpp
+CSVUtilities_SRC = /home/haniel/Libraries/ETL/CSVUtilities.cpp
 DYNAMIC_STATISTICS_SRC = /home/haniel/Libraries/ETL/dynamic_statistics.cpp
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c main.cpp -o main.o
 
-csv_utilities.o: $(CSV_UTILITIES_SRC)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(CSV_UTILITIES_SRC) -o csv_utilities.o
+CSVUtilities.o: $(CSVUtilities_SRC)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(CSVUtilities_SRC) -o CSVUtilities.o
 
 dynamic_statistics.o: $(DYNAMIC_STATISTICS_SRC)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(DYNAMIC_STATISTICS_SRC) -o dynamic_statistics.o
