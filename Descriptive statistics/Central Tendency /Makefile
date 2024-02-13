@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall
+CXXFLAGS = -std=c++17 -Wall
 INCLUDES = -I/home/haniel/Libraries/ETL
 
 TARGET = stats_app
