@@ -1,25 +1,13 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall
-INCLUDES = -I/home/haniel/Libraries/ETL
+CXXFLAGS = -std=c++17 -I/home/haniel/Libraries/ETL
 
-TARGET = stats_app
+all: stats
 
-OBJECTS = main.o CSVUtilities.o dynamic_statistics.o
+stats: main.o /home/haniel/Libraries/ETL/CSVUtilities.o
+	$(CXX) -o stats main.o /home/haniel/Libraries/ETL/CSVUtilities.o $(CXXFLAGS)
 
-CSVUtilities_SRC = /home/haniel/Libraries/ETL/CSVUtilities.cpp
-DYNAMIC_STATISTICS_SRC = /home/haniel/Libraries/ETL/dynamic_statistics.cpp
-
-main.o: main.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c main.cpp -o main.o
-
-CSVUtilities.o: $(CSVUtilities_SRC)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(CSVUtilities_SRC) -o CSVUtilities.o
-
-dynamic_statistics.o: $(DYNAMIC_STATISTICS_SRC)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $(DYNAMIC_STATISTICS_SRC) -o dynamic_statistics.o
-
-$(TARGET): $(OBJECTS)
-	$(CXX) $(OBJECTS) -o $(TARGET)
+main.o: main.cpp /home/haniel/Libraries/ETL/CSVUtilities.h
+	$(CXX) -c main.cpp $(CXXFLAGS)
 
 clean:
-	rm -f $(OBJECTS) $(TARGET)
+	rm -f *.o stats
