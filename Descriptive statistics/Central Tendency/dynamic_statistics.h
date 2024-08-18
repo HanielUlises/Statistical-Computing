@@ -34,6 +34,5 @@ private:
     void validateSize(size_t minSize) const;
 };
 
-#include "dynamic_statistics.tpp"
 
 #endif // DYNAMIC_STATISTICS_H
