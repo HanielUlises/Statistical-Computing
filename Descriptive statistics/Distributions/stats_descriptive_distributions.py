@@ -123,22 +123,23 @@ def main():
     print("h) F distribution\n")
     option = input ()
 
-    if option == 'a':
-        normal_dist()
-    elif option == 'b':
-        emp_norm_dis()
-    elif option == 'c':
-        uniform_dist()
-    elif option == 'd':
-        log_normal_dist ()
-    elif option == 'e':
-        emp_log_normal_dist ()
-    elif option == 'f':
-        binomial ()
-    elif option == 'g':
-        t_test ()
-    elif option == 'h':
-        f_dist ()
+    match option:
+        case 'a':
+            normal_dist()
+        case'b':
+            emp_norm_dis()
+        case'c':
+            uniform_dist()
+        case'd':
+            log_normal_dist ()
+        case 'e':
+            emp_log_normal_dist ()
+        case 'f':
+            binomial ()
+        case'g':
+            t_test ()
+        case 'h':
+            f_dist ()
 
 if __name__ == '__main__':
     main()
