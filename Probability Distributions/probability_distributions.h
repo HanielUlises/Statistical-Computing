@@ -4,6 +4,9 @@
 #include <vector>
 #include <random>
 #include <cmath>
+#include <iostream>
+#include <cassert>
+#include <iomanip>
 
 // Normal Distribution
 class NormalDistribution {
@@ -47,6 +50,19 @@ private:
     double lambda_;
     mutable std::mt19937 gen_;
     mutable std::exponential_distribution<double> dist_;
+};
+
+// Binomial Distribution
+class Binomial {
+public:
+    Binomial(int N, int K, double P);
+    double singleValue(); // Computes a single probability value
+    void binomialTable(); // Prints a binomial probability table
+    double expectedValue(); // Computes expected value
+
+private:
+    int n, k;
+    double p;
 };
 
 #endif // PROBABILITY_DISTRIBUTIONS_HPP

@@ -1,5 +1,10 @@
 #include "probability_distributions.h"
+#include <iostream>
+#include <iomanip>
+#include <cassert>
+#include <cmath>
 
+// Normal Distribution
 NormalDistribution::NormalDistribution(double mean, double stddev) 
     : mean_(mean), stddev_(stddev), dist_(mean_, stddev_) {}
 
@@ -15,6 +20,7 @@ double NormalDistribution::random_sample() const {
     return dist_(gen_);
 }
 
+// Uniform Distribution
 UniformDistribution::UniformDistribution(double lower, double upper) 
     : lower_(lower), upper_(upper), dist_(lower_, upper_) {}
 
@@ -32,6 +38,7 @@ double UniformDistribution::random_sample() const {
     return dist_(gen_);
 }
 
+// Exponential Distribution
 ExponentialDistribution::ExponentialDistribution(double lambda) 
     : lambda_(lambda), dist_(lambda) {}
 
@@ -45,4 +52,46 @@ double ExponentialDistribution::cdf(double x) const {
 
 double ExponentialDistribution::random_sample() const {
     return dist_(gen_);
+}
+
+// Binomial Distribution
+Binomial::Binomial(int N, int K, double P) 
+    : n(N), k(K), p(P) {}
+
+double Binomial::singleValue() {
+    double b, r;
+    double q = 1.0 - p;
+    int m = n + 1;
+    
+    assert(p > 0 && p < 1 && k > 0 && k <= n);
+    
+    b = n * log(q);
+    r = log(p / q);
+    
+    for (int i = 1; i <= k; i++) {
+        b += r + log(static_cast<double>(m) / i - 1.0);
+    }
+
+    return exp(b);
+}
+
+void Binomial::binomialTable() {
+    double b, r;
+    double q = 1.0 - p;
+    int m = n + 1;
+    
+    assert(p > 0 && p < 1);
+    
+    b = n * log(q);
+    r = log(p / q);
+
+    std::cout << std::fixed << std::setprecision(6) << std::setw(5) << "0" << std::setw(15) << exp(b) << std::endl;
+    for (int i = 1; i <= n; i++) {
+        b += r + log(static_cast<double>(m) / i - 1.0);
+        std::cout << std::setw(5) << i << std::setw(15) << exp(b) << std::endl;
+    }
+}
+
+double Binomial::expectedValue() {
+    return n * p;
 }
