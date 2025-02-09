@@ -1,137 +1,56 @@
-# Statistical Algorithms Implemented
+# Welcome to My Personal Repository on Statistical Computing and Randomized Algorithms
 
-This repository implements a variety of statistical algorithms using **C++**, **R**, and **Python**, showcasing the strengths of each language. While **C++** excels in performance and efficiency, **R** is well-known for its comprehensive statistical libraries, and **Python** is widely appreciated for its ease of use, flexibility, and rich ecosystem.
+Hello there! I'm excited to share my personal space where I explore the fascinating world of statistical computing and randomized algorithms. Over the years, I've been captivated by the interplay between rigorous probability theory and practical algorithm design. This repository is my personal playground—a place where I dive deep into theory, experiment with implementations, and document my learning journey.
 
-## Algorithms Overview
+## What This Repository Is All About
 
-### 1. **Descriptive Statistics**
-   - **Purpose**: Provides summary metrics that describe the main characteristics of a dataset.
-   - **Common Algorithms**:
-     - Measures of Central Tendency: Mean, Median, Mode
-     - Measures of Spread: Variance, Standard Deviation
-     - Distribution Metrics: Skewness, Kurtosis
-   - **C++ Example**:  
-     C++ provides efficient computation of descriptive statistics using the Standard Template Library (STL). For instance, `std::accumulate` can be used for sums and means, and `std::sort` for calculating medians.
+Inspired by two influential books—*Statistical Computing in C++ and R* by Ana Kupresanin and R. L. Eubank, and *Probability and Computing* by Michael Mitzenmacher and Eli Upfal—I set out to bridge the gap between abstract theory and real-world applications. Here, I work on projects that range from the fundamentals of probability to advanced randomized algorithms, all while keeping a keen eye on both theoretical elegance and practical performance.
 
-     ```cpp
-     #include <iostream>
-     #include <vector>
-     #include <numeric>
-     #include <algorithm>
+### Key Themes and Topics
 
-     double compute_mean(const std::vector<double>& data) {
-         return std::accumulate(data.begin(), data.end(), 0.0) / data.size();
-     }
+- **Foundations of Probability:**  
+  I begin with the basics—the axioms of probability and the beauty of events. Early explorations include applications like verifying polynomial identities and matrix multiplication through randomized methods. These concepts form the backbone of the work that follows.
 
-     double compute_median(std::vector<double> data) {
-         std::sort(data.begin(), data.end());
-         size_t n = data.size();
-         if (n % 2 == 0) {
-             return (data[n / 2 - 1] + data[n / 2]) / 2;
-         } else {
-             return data[n / 2];
-         }
-     }
-     ```
+- **Discrete Random Variables and Expectation:**  
+  Diving into discrete distributions such as Bernoulli and Binomial, I explore the power of expectation. Topics like linearity of expectation and classic challenges such as the Coupon Collector’s Problem or analyzing QuickSort's runtime are central to my studies.
 
-### 2. **Regression Analysis**
-   - **Purpose**: Models relationships between dependent and independent variables.
-   - **Common Algorithms**:
-     - Linear Regression (OLS)
-     - Logistic Regression
-     - Ridge and Lasso Regression
-   - **C++ Example**:  
-     Implementing regression analysis in C++ can be optimized for performance, especially when handling large datasets. The STL and libraries like `Eigen` allow efficient matrix operations for regression analysis.
+- **Moments, Deviations, and Concentration Bounds:**  
+  Understanding the variability of random processes is key. I tackle variance, Chebyshev's inequality, and then move into the realm of Chernoff and Hoeffding bounds. These concentration bounds are critical when assessing how far off our algorithms might stray from expected behavior.
 
-     ```cpp
-     #include <iostream>
-     #include <vector>
-     #include <numeric>
+- **Randomized Algorithms and the Probabilistic Method:**  
+  One of my favorite areas is using randomness as a strategic tool. I explore techniques such as the randomized Min-Cut algorithm and methods to derandomize processes via conditional expectations. These topics have taught me that sometimes, a bit of randomness can simplify even the most complex problems.
 
-     double linear_regression_slope(const std::vector<double>& x, const std::vector<double>& y) {
-         double mean_x = compute_mean(x);
-         double mean_y = compute_mean(y);
+- **Hashing, Random Graphs, and Random Walks:**  
+  The study of randomness naturally extends into practical applications like hashing and graph theory. I investigate classic models such as the Balls-and-Bins problem and random graphs, and I delve into Markov chains and random walks—powerful tools for modeling dynamic systems.
 
-         double numerator = std::inner_product(x.begin(), x.end(), y.begin(), 0.0) - x.size() * mean_x * mean_y;
-         double denominator = std::inner_product(x.begin(), x.end(), x.begin(), 0.0) - x.size() * mean_x * mean_x;
+- **Bayesian Inference and Monte Carlo Methods:**  
+  Merging probability with statistics, I experiment with Bayesian methods and Monte Carlo simulations, including the Metropolis algorithm and EM for Gaussian mixtures. These techniques are incredibly useful in making sense of data and in solving high-dimensional problems.
 
-         return numerator / denominator;
-     }
-     ```
+- **Entropy, Information Theory, and Universal Hash Functions:**  
+  I also find great interest in the theory of information. From Shannon entropy and coding theorems to designing robust universal hash functions, these topics illustrate the profound connections between data, randomness, and algorithmic efficiency.
 
-### 3. **Hypothesis Testing**
-   - **Purpose**: Tests assumptions about population parameters using statistical evidence.
-   - **Common Algorithms**:
-     - t-Test (One-sample, Two-sample)
-     - Chi-squared Test
-     - ANOVA (Analysis of Variance)
-   - **C++ Example**:  
-     Hypothesis tests, like the t-test, can be efficiently implemented in C++ using tools from the STL for array manipulation and numerical computations.
+## Why I Built This Repository
 
-     ```cpp
-     #include <vector>
-     #include <numeric>
-     #include <cmath>   
+This repository is a reflection of my personal journey into the heart of statistical computing. Here’s why it matters to me:
 
-     double compute_standard_deviation(const std::vector<double>& data, double mean) {
-         double sum = std::accumulate(data.begin(), data.end(), 0.0, 
-             [mean](double acc, double x) { return acc + (x - mean) * (x - mean); });
-         return std::sqrt(sum / (data.size() - 1));
-     }
+1. **A Passion for Learning:**  
+   I have always been fascinated by how a few mathematical principles can unlock efficient solutions to complex problems. This repository is my way of deepening that understanding and continuously challenging myself.
 
-     double t_statistic(const std::vector<double>& data, double population_mean) {
-         double sample_mean = compute_mean(data);
-         double std_dev = compute_standard_deviation(data, sample_mean);
-         return (sample_mean - population_mean) / (std_dev / std::sqrt(data.size()));
-     }
-     ```
+2. **Bridging Theory and Practice:**  
+   I believe that true mastery comes from the marriage of theory and hands-on application. By experimenting with both, I aim to see how abstract ideas can be transformed into practical tools that solve real-world problems.
 
-### 4. **Bayesian Inference**
-   - **Purpose**: A probabilistic approach to model parameters using Bayes' Theorem.
-   - **Common Algorithms**:
-     - Bayesian Linear Regression
-     - Markov Chain Monte Carlo (MCMC)
-     - Gibbs Sampling
-   - **C++ Example**:  
-     C++ is well-suited for implementing complex iterative algorithms like MCMC, using its efficient memory management and data structures (`std::vector`, `std::array`) to store chains and update posterior estimates.
+3. **Sharing My Journey:**  
+   I hope that by putting my work out there, I can connect with others who share similar interests—whether you're a student, a researcher, or simply curious about the magic behind randomized algorithms. I believe that knowledge grows when it's shared and discussed.
 
-### 5. **Clustering**
-   - **Purpose**: Group similar data points into clusters for unsupervised learning.
-   - **Common Algorithms**:
-     - K-Means Clustering
-     - Hierarchical Clustering
-     - Gaussian Mixture Models (GMM)
-   - **C++ Example**:  
-     Clustering algorithms like K-Means can be optimized for performance in C++, especially for large datasets. The `std::vector` container can be used to store data points, and `std::transform` to efficiently update centroids.
+4. **Embracing Creativity and Experimentation:**  
+   Not everything works perfectly on the first try, and that's okay! This is a space for trial, error, and creative exploration. I encourage you to embrace this mindset too, and to see failures as stepping stones to deeper insights.
 
-     ```cpp
-     #include <vector>
-     #include <algorithm>
+## Looking Ahead
 
-     void update_centroid(std::vector<double>& centroid, const std::vector<std::vector<double>>& cluster) {
-         std::transform(centroid.begin(), centroid.end(), cluster.begin(), centroid.begin(), 
-             [](double& c, const std::vector<double>& point) {
-                 return c + std::accumulate(point.begin(), point.end(), 0.0) / cluster.size();
-             });
-     }
-     ```
+This repository is a living project. As I continue to learn and experiment, you'll find new topics, refined implementations, and fresh insights added over time. My goal is to keep pushing the boundaries of what I know and to document the evolution of my understanding in this exciting field.
 
----
+Thank you for taking the time to explore my work. I’m thrilled to have you along on this journey of discovery, and I look forward to seeing where these explorations take us both.
 
-## Integrating C++, R, and Python
+Happy exploring!
 
-While each language has its strengths, integrating **C++**, **R**, and **Python** can leverage the best of all worlds. C++ can be used for performance-critical components, such as computationally intensive algorithms or large-scale data processing. Python, with its simple syntax and rich ecosystem (e.g., libraries like NumPy, Pandas, and SciPy), can act as the glue that connects the entire workflow, facilitating fast prototyping and easy integration with various tools. Finally, R can be employed for specialized statistical analysis, taking advantage of its deep statistical libraries and visualization capabilities.
-
-Through tools like **Rcpp** (to connect C++ with R) and **pybind11** or **SWIG** (to interface C++ with Python), we can seamlessly blend these languages into a cohesive pipeline. This allows for efficient use of C++ where performance matters, while still benefiting from the flexibility and ease of use provided by R and Python.
-
-## Why Use C++ for Statistical Computing?
-
-### Why use C++?
-
-C++ is an excellent choice for statistical computing due to several advantages:
-
-1. **Performance**: C++ is a compiled language, offering faster execution times compared to interpreted languages like Python and R. This makes it ideal for handling large-scale datasets and computationally intensive algorithms such as MCMC, Bayesian inference, and clustering.
-   
-2. **Fine-Grained Memory Control**: C++ provides direct control over memory management, allowing for optimizations when dealing with large or complex data structures. This is particularly useful in scenarios where memory efficiency is critical, such as in high-dimensional data analysis.
-
-3. **STL and Numerical Libraries**: The Standard Template Library (STL) provides a powerful set of algorithms and data structures like `std::vector`, `std::accumulate`, and `std::transform`, which facilitate efficient statistical computations. Additionally, C++ integrates well with advanced numerical libraries like **Eigen** (for linear algebra) and **Boost** (for extended statistical functions), enabling high-performance implementations of complex algorithms.
+— Haniel Ulises :D
