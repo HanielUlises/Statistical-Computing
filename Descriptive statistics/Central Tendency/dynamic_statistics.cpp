@@ -7,31 +7,31 @@
 #include <stdexcept>
 
 template<typename T>
-DynamicStatistics<T>::DynamicStatistics(const std::vector<T>& _data) : data(_data) {}
+Central_Tendency<T>::Central_Tendency(const std::vector<T>& _data) : data(_data) {}
 
 template<typename T>
-void DynamicStatistics<T>::validateNonEmpty() const {
+void Central_Tendency<T>::validateNonEmpty() const {
     if (data.empty()) {
         throw std::runtime_error("Dataset is empty.");
     }
 }
 
 template<typename T>
-void DynamicStatistics<T>::validateSize(size_t minSize) const {
+void Central_Tendency<T>::validateSize(size_t minSize) const {
     if (data.size() < minSize) {
         throw std::runtime_error("Dataset must contain at least " + std::to_string(minSize) + " elements.");
     }
 }
 
 template<typename T>
-T DynamicStatistics<T>::mean() const {
+T Central_Tendency<T>::mean() const {
     validateNonEmpty();
     T sum = std::accumulate(data.begin(), data.end(), T(0));
     return sum / data.size();
 }
 
 template<typename T>
-T DynamicStatistics<T>::median() const {
+T Central_Tendency<T>::median() const {
     validateNonEmpty();
     std::vector<T> sortedData = data;
     std::sort(sortedData.begin(), sortedData.end());
@@ -45,7 +45,7 @@ T DynamicStatistics<T>::median() const {
 }
 
 template<typename T>
-std::optional<T> DynamicStatistics<T>::mode() const {
+std::optional<T> Central_Tendency<T>::mode() const {
     validateNonEmpty();
 
     std::map<T, int> frequencyMap;
@@ -70,7 +70,7 @@ std::optional<T> DynamicStatistics<T>::mode() const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::variance() const {
+T Central_Tendency<T>::variance() const {
     validateSize(2);
 
     T meanValue = mean();
@@ -83,12 +83,12 @@ T DynamicStatistics<T>::variance() const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::standardDeviation() const {
+T Central_Tendency<T>::standard_deviation() const {
     return std::sqrt(variance());
 }
 
 template<typename T>
-T DynamicStatistics<T>::range() const {
+T Central_Tendency<T>::range() const {
     validateNonEmpty();
 
     auto [minIt, maxIt] = std::minmax_element(data.begin(), data.end());
@@ -96,11 +96,11 @@ T DynamicStatistics<T>::range() const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::skewness() const {
+T Central_Tendency<T>::skewness() const {
     validateSize(3);
 
     T meanValue = mean();
-    T stdDev = standardDeviation();
+    T stdDev = standard_deviation();
 
     T skewSum = std::accumulate(data.begin(), data.end(), T(0), [meanValue, stdDev](T acc, T value) {
         return acc + std::pow((value - meanValue) / stdDev, 3);
@@ -110,7 +110,7 @@ T DynamicStatistics<T>::skewness() const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::kurtosis() const {
+T Central_Tendency<T>::kurtosis() const {
     validateSize(4);
 
     T meanValue = mean();
@@ -126,7 +126,7 @@ T DynamicStatistics<T>::kurtosis() const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::percentile(double p) const {
+T Central_Tendency<T>::percentile(double p) const {
     validateNonEmpty();
 
     if (p < 0.0 || p > 100.0) {
@@ -141,12 +141,12 @@ T DynamicStatistics<T>::percentile(double p) const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::interquartileRange() const {
+T Central_Tendency<T>::interquartile_range() const {
     return percentile(75) - percentile(25);
 }
 
 template<typename T>
-T DynamicStatistics<T>::covariance(const DynamicStatistics<T>& other) const {
+T Central_Tendency<T>::covariance(const Central_Tendency<T>& other) const {
     validateSize(2);
 
     if (data.size() != other.data.size()) {
@@ -165,7 +165,7 @@ T DynamicStatistics<T>::covariance(const DynamicStatistics<T>& other) const {
 }
 
 template<typename T>
-T DynamicStatistics<T>::correlationCoefficient(const DynamicStatistics<T>& other) const {
+T Central_Tendency<T>::correlation_coefficient(const Central_Tendency<T>& other) const {
     T cov = covariance(other);
     T stdDev1 = standardDeviation();
     T stdDev2 = other.standardDeviation();
@@ -174,7 +174,7 @@ T DynamicStatistics<T>::correlationCoefficient(const DynamicStatistics<T>& other
 }
 
 template<typename T>
-std::vector<T> DynamicStatistics<T>::normalize() const {
+std::vector<T> Central_Tendency<T>::normalize() const {
     validateNonEmpty();
 
     T meanValue = mean();
@@ -191,12 +191,12 @@ std::vector<T> DynamicStatistics<T>::normalize() const {
 }
 
 template<typename T>
-void DynamicStatistics<T>::addDataPoint(const T& value) {
+void Central_Tendency<T>::add_data_point(const T& value) {
     data.push_back(value);
 }
 
 template<typename T>
-void DynamicStatistics<T>::removeDataPoint(const T& value) {
+void Central_Tendency<T>::remove_data_point(const T& value) {
     auto it = std::find(data.begin(), data.end(), value);
     if (it != data.end()) {
         data.erase(it);
@@ -204,6 +204,6 @@ void DynamicStatistics<T>::removeDataPoint(const T& value) {
 }
 
 template<typename T>
-void DynamicStatistics<T>::clearData() {
+void Central_Tendency<T>::clear_data() {
     data.clear();
 }
