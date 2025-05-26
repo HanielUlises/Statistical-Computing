@@ -1,4 +1,4 @@
-#include "LinearRegression.h"
+#include "slr.h"
 #include <numeric>
 #include <cassert>
 
