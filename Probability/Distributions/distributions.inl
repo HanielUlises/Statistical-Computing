@@ -1,5 +1,9 @@
 #pragma once
 
+#include "bernoulli.hpp"
+#include "normal.hpp"
+#include "poisson.hpp"
+
 #include <cmath>
 #include <random>
 #include <stat/core/error.hpp>
