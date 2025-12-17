@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stat/probability/distributions/bernoulli.hpp>
-#include <stat/probability/random_variable.hpp>
+#include "../../random_variable.hpp"
 #include <random>
 
 namespace stat::prob {

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "random_variable.hpp"
-#include "Distributions/Random Variables/bernoulli_rv.hpp"
-#include "Distributions/Random Variables/normal.hpp"
-#include "Distributions/Random Variables/poisson_rv.hpp"
+#include "distributions/random_variables/bernoulli_rv.hpp"
+#include "distributions/random_variables/normal_rv.hpp"
+#include "distributions/random_variables/poisson_rv.hpp"
 
 #include <type_traits>
 #include <stat/core/concepts.hpp>
