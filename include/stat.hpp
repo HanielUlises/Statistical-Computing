@@ -30,3 +30,11 @@
 #include "stat/probability/distributions/bernoulli.hpp"
 #include "stat/probability/distributions/normal.hpp"
 #include "stat/probability/distributions/poisson.hpp"
+
+// ==========================
+// Conditional probability
+// ==========================
+#include <stat/probability/conditional/conditional_distribution.hpp>
+#include <stat/probability/conditional/conditional_entropy.hpp>
+#include <stat/probability/conditional/bayes.hpp>
+
