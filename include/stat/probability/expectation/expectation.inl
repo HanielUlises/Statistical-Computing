@@ -1,21 +1,20 @@
 #pragma once
 
-#include <stat/core/concepts.hpp>
-
 namespace stat::prob {
 
-// Expectation of a function of a random variable:
-//
-//   E[g(X)] = ∫ g(x) p(x) dx
-//
 template <typename Dist,
           typename Integrator,
           typename Function,
           typename X>
 auto expectation(const Dist& dist,
                  const Integrator& integrator,
-                 const Function& g);
+                 const Function& g)
+{
+    return integrator.integrate(
+        [&](const X& x) {
+            return g(x) * dist.pdf(x);
+        }
+    );
+}
 
 } // namespace stat::prob
-
-#include "expectation.inl"
