@@ -1,50 +1,32 @@
 #pragma once
 
 #include <cstddef>
-#include <concepts>
-#include <type_traits>
+#include <cstdint>
 
 namespace stat::core::hashing {
 
-// A Hash must be callable with a key and return a size_t
-template <typename H, typename Key>
-concept Hash =
-    requires(const H& h, const Key& k) {
-        { h(k) } -> std::convertible_to<std::size_t>;
-    };
+// Canonical hash value type
+using hash_value = std::size_t;
 
-// A seeded hash can be constructed from an explicit seed
-template <typename H>
-concept SeededHash =
-    requires(std::size_t seed) {
-        H{seed};
-    };
+// Canonical seed type
+using hash_seed = std::uint64_t;
 
-// A statelss has has no internal state beyond construction
-template <typename H>
-concept StatelessHash =
-    std::is_trivially_copyable_v<H> &&
-    std::is_trivially_destructible_v<H>;
+// Default seed (golden ratio, good avalanche properties)
+inline constexpr hash_seed default_seed =
+    0x9e3779b97f4a7c15ULL;
 
-// A StatefulHash explicitly carries internal state
-template <typename H>
-concept StatefulHash =
-    !StatelessHash<H>;
+// Mix function (SplitMix64 finalizer)
+// Useful for building custom hash combiners
+constexpr hash_value mix(hash_value x) noexcept {
+    x += 0x9e3779b97f4a7c15ULL;
+    x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9ULL;
+    x = (x ^ (x >> 27)) * 0x94d049bb133111ebULL;
+    return x ^ (x >> 31);
+}
 
-// A deterministic hash produces the same output for the same input
-// given the same constructed instance
-template <typename H, typename Key>
-concept DeterministicHash =
-    Hash<H, Key> &&
-    requires(const H& h, const Key& k) {
-        { h(k) } noexcept;
-    };
-
-// A UniversalHash models a member of a universal hash family
-// (parameterized by a seed)
-template <typename H>
-concept UniversalHash =
-    SeededHash<H> &&
-    StatelessHash<H>;
+// Combine two hash values (order-sensitive)
+constexpr hash_value combine(hash_value lhs, hash_value rhs) noexcept {
+    return mix(lhs ^ (rhs + default_seed));
+}
 
 } // namespace stat::core::hashing
