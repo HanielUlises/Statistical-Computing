@@ -5,7 +5,7 @@
 #include <concepts>
 
 #include <stat/probability/graphical/graph.hpp>
-#include <stat/probability/graphical/algorithms/assignment.hpp>
+#include <stat/probability/graphical/assignment.hpp>
 
 namespace stat::probability::inference {
 
