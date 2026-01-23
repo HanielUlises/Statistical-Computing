@@ -22,10 +22,10 @@ struct Query {
 
 // Result of an inference query
 struct InferenceResult {
-    std::unordered_map<
-        graphical::assignment<std::size_t>,
-        double
-    > distribution;
+    using Assignment =
+        stat::prob::graphical::assignment<std::size_t>;
+
+    std::unordered_map<Assignment, double> distribution;
 
     void normalize();
 };
