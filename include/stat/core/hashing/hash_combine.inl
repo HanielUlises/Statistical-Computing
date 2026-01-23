@@ -1,5 +1,7 @@
 #pragma once
 
+#include "hash_combine.hpp"
+
 namespace stat::core::hashing {
 
 inline std::size_t hash_combine(std::size_t h1, std::size_t h2) noexcept {
