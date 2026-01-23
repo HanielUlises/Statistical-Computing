@@ -48,6 +48,10 @@ class assignment {
             return values_ == other.values_;
         }
 
+        const std::unordered_map<var_id, Value>& values() const {
+            return values_;
+        }
+
     private:
         std::unordered_map<var_id, Value> values_;
 };
