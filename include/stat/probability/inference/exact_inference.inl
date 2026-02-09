@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algorithm>
-#include <stat/probability/graphical/factor_operations.hpp>
+#include <stat/probability/graphical/algorithms/factor_operations.hpp>
 
 namespace stat::prob::inference {
 
