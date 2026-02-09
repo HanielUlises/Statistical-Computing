@@ -1,35 +1,29 @@
 #pragma once
 
-#include "factor.hpp"
+#include <stat/probability/graphical/algorithms/factor.hpp>
 
 namespace stat::prob::graphical {
 
 template <typename Assignment>
-factor<Assignment>
-multiply(const factor<Assignment>& f1,
-         const factor<Assignment>& f2)
+Factor<Assignment>
+multiply(const Factor<Assignment>& a,
+         const Factor<Assignment>& b)
 {
-    factor<Assignment> result;
-    for (auto& [a, v1] : f1.table()) {
-        for (auto& [b, v2] : f2.table()) {
-            if (a.compatible(b)) {
-                result.set(a.merge(b), v1 * v2);
+    std::vector<std::size_t> vars = a.variables();
+    for (auto v : b.variables())
+        if (std::find(vars.begin(), vars.end(), v) == vars.end())
+            vars.push_back(v);
+
+    Factor<Assignment> result(vars);
+
+    for (const auto& [a1, p1] : a.table()) {
+        for (const auto& [a2, p2] : b.table()) {
+            if (a1.compatible(a2)) {
+                result.set(a1.merge(a2), p1 * p2);
             }
         }
     }
-    return result;
-}
 
-template <typename Assignment, typename Var>
-factor<Assignment>
-sum_out(const factor<Assignment>& f,
-        const Var& var)
-{
-    factor<Assignment> result;
-    for (auto& [a, v] : f.table()) {
-        auto reduced = a.remove(var);
-        result.set(reduced, result(reduced) + v);
-    }
     return result;
 }
 
