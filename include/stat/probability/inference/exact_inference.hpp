@@ -13,10 +13,10 @@ namespace stat::prob::inference {
 class ExactInference {
 public:
     using Assignment =
-        stat::prob::graphical::assignment<std::size_t>;
+    stat::prob::graphical::assignment<std::size_t>;
 
     using Factor =
-        stat::prob::graphical::algorithms::Factor;
+        stat::prob::graphical::factor<Assignment>;
 
     explicit ExactInference(std::vector<Factor> factors);
 
