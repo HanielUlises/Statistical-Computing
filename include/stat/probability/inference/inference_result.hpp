@@ -5,7 +5,7 @@
 
 #include <stat/probability/graphical/assignment.hpp>
 
-namespace stat::prob::inference {
+namespace stat::probability::inference {
 
 struct InferenceResult {
     using Assignment =
