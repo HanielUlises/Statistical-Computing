@@ -5,7 +5,7 @@
 #include <numeric>
 #include <stdexcept>
 
-namespace stat::probability::inference {
+namespace stat::prob::inference {
 
 inline void InferenceResult::normalize()
 {
