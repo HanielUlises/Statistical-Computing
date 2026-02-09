@@ -1,12 +1,20 @@
+#pragma once
+
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
 namespace stat::prob::graphical {
 
 template <typename Assignment>
 class Factor {
 public:
-    using value_type = double;
+    using value_type   = double;
     using variable_type = std::size_t;
 
-    Factor(std::vector<variable_type> vars = {})
+    Factor() = default;
+
+    explicit Factor(std::vector<variable_type> vars)
         : vars_(std::move(vars)) {}
 
     void set(const Assignment& a, value_type v) {
@@ -29,7 +37,7 @@ public:
 
         for (const auto& [a, p] : table_) {
             if (a.compatible(evidence))
-                result.set(a.merge(evidence), p);
+                result.table_[a.merge(evidence)] += p;
         }
 
         return result;
@@ -43,8 +51,7 @@ public:
         Factor result(new_vars);
 
         for (const auto& [a, p] : table_) {
-            auto reduced = a.remove(v);
-            result.table_[reduced] += p;
+            result.table_[a.remove(v)] += p;
         }
 
         return result;
