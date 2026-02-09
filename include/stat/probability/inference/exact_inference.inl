@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma once
+
+#include <stat/probability/inference/exact_inference.hpp>
 #include <algorithm>
 #include <stat/probability/graphical/algorithms/factor_operations.hpp>
 

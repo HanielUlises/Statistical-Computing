@@ -1,29 +1,58 @@
-#pragma once
-
-#include <vector>
-#include <unordered_map>
-
 namespace stat::prob::graphical {
 
-
-// A factor is a function over a subset of variables.
 template <typename Assignment>
-class factor {
-    public:
-        using value_type = double;
+class Factor {
+public:
+    using value_type = double;
+    using variable_type = std::size_t;
 
-        void set(const Assignment& a, value_type v) {
-            table_[a] = v;
+    Factor(std::vector<variable_type> vars = {})
+        : vars_(std::move(vars)) {}
+
+    void set(const Assignment& a, value_type v) {
+        table_[a] = v;
+    }
+
+    value_type operator()(const Assignment& a) const {
+        return table_.at(a);
+    }
+
+    const auto& table() const { return table_; }
+    const auto& variables() const { return vars_; }
+
+    bool depends_on(variable_type v) const {
+        return std::find(vars_.begin(), vars_.end(), v) != vars_.end();
+    }
+
+    Factor condition(const Assignment& evidence) const {
+        Factor result(vars_);
+
+        for (const auto& [a, p] : table_) {
+            if (a.compatible(evidence))
+                result.set(a.merge(evidence), p);
         }
 
-        value_type operator()(const Assignment& a) const {
-            return table_.at(a);
+        return result;
+    }
+
+    Factor marginalize(variable_type v) const {
+        std::vector<variable_type> new_vars;
+        for (auto x : vars_)
+            if (x != v) new_vars.push_back(x);
+
+        Factor result(new_vars);
+
+        for (const auto& [a, p] : table_) {
+            auto reduced = a.remove(v);
+            result.table_[reduced] += p;
         }
 
-        const auto& table() const { return table_; }
+        return result;
+    }
 
-    private:
-        std::unordered_map<Assignment, value_type> table_;
+private:
+    std::vector<variable_type> vars_;
+    std::unordered_map<Assignment, value_type> table_;
 };
 
 } // namespace stat::prob::graphical
