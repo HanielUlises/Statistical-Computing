@@ -1,6 +1,6 @@
 #pragma once
 
-#include "inference_engine.hpp"
+#include "inference_result.hpp"
 
 #include <numeric>
 #include <stdexcept>
