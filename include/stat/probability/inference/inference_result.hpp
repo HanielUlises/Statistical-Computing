@@ -4,8 +4,10 @@
 #include <cstddef>
 
 #include <stat/probability/graphical/assignment.hpp>
+#include <stat/core/hashing/assignment_hash.hpp>
 
 namespace stat::prob::inference {
+
 
 struct InferenceResult {
     using Assignment =
@@ -15,7 +17,6 @@ struct InferenceResult {
 
     void normalize();
 };
-
 } // namespace stat::prob::inference
 
 #include "inference_result.inl"

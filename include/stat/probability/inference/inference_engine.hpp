@@ -7,6 +7,7 @@
 #include <stat/probability/graphical/graph.hpp>
 #include <stat/probability/graphical/assignment.hpp>
 
+
 namespace stat::probability::inference {
 
 using Variable = std::size_t;

@@ -5,7 +5,7 @@
 
 #include <stat/probability/graphical/algorithms/factor.hpp>
 #include <stat/probability/graphical/assignment.hpp>
-
+#include <stat/probability/inference/inference_engine.hpp>
 #include <stat/probability/inference/inference_result.hpp>
 
 namespace stat::prob::inference {
@@ -13,10 +13,10 @@ namespace stat::prob::inference {
 class ExactInference {
 public:
     using Assignment =
-    stat::prob::graphical::assignment<std::size_t>;
+        stat::prob::graphical::assignment<std::size_t>;
 
     using Factor =
-        stat::prob::graphical::factor<Assignment>;
+        stat::prob::graphical::Factor<Assignment>;
 
     explicit ExactInference(std::vector<Factor> factors);
 

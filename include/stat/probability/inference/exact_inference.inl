@@ -1,10 +1,9 @@
 #pragma once
 
-#pragma once
-
-#include <stat/probability/inference/exact_inference.hpp>
 #include <algorithm>
 #include <stat/probability/graphical/algorithms/factor_operations.hpp>
+
+#include "exact_inference.hpp"
 
 namespace stat::prob::inference {
 
@@ -14,6 +13,7 @@ inline ExactInference::ExactInference(std::vector<Factor> factors)
 inline std::vector<ExactInference::Factor>
 ExactInference::apply_evidence(const Assignment& evidence) const {
     std::vector<Factor> updated;
+    updated.reserve(factors_.size());
 
     for (const auto& f : factors_)
         updated.push_back(f.condition(evidence));
@@ -41,7 +41,7 @@ ExactInference::eliminate_variable(
 
     Factor product = involved.front();
     for (std::size_t i = 1; i < involved.size(); ++i)
-        product = multiply(product, involved[i]);
+        product = stat::prob::graphical::multiply(product, involved[i]);
 
     remaining.push_back(product.marginalize(var));
     return remaining;
@@ -53,22 +53,22 @@ inline InferenceResult ExactInference::query(
 ) const {
     auto factors = apply_evidence(evidence);
 
-    // Retrieving ALL variables
     std::vector<std::size_t> vars;
     for (const auto& f : factors)
         for (auto v : f.variables())
             vars.push_back(v);
 
-    // Prunning non-query variables
     for (auto v : vars) {
-        if (std::find(query_vars.begin(), query_vars.end(), v) == query_vars.end())
+        if (std::find(query_vars.begin(), query_vars.end(), v)
+            == query_vars.end())
+        {
             factors = eliminate_variable(std::move(factors), v);
+        }
     }
 
-    // Multiply remaining factors
     Factor joint = factors.front();
     for (std::size_t i = 1; i < factors.size(); ++i)
-        joint = multiply(joint, factors[i]);
+        joint = stat::prob::graphical::multiply(joint, factors[i]);
 
     InferenceResult result;
     for (const auto& [a, p] : joint.table())
