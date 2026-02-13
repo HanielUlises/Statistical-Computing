@@ -21,6 +21,10 @@ public:
         table_[a] = v;
     }
 
+    value_type& operator[](const Assignment& a) {
+        return table_[a];
+    }
+
     value_type operator()(const Assignment& a) const {
         return table_.at(a);
     }
