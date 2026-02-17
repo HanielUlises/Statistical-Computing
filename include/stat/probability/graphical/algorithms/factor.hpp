@@ -3,13 +3,16 @@
 #include <vector>
 #include <unordered_map>
 #include <algorithm>
+#include <cstddef>
+
+#include <stat/core/hashing/assignment_hash.hpp>
 
 namespace stat::prob::graphical {
 
 template <typename Assignment>
 class Factor {
 public:
-    using value_type   = double;
+    using value_type    = double;
     using variable_type = std::size_t;
 
     Factor() = default;
@@ -63,7 +66,12 @@ public:
 
 private:
     std::vector<variable_type> vars_;
-    std::unordered_map<Assignment, value_type> table_;
+
+    std::unordered_map<
+        Assignment,
+        value_type,
+        stat::core::hashing::assignment_hash<std::size_t>
+    > table_;
 };
 
 } // namespace stat::prob::graphical
