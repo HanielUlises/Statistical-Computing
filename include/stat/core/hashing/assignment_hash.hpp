@@ -1,32 +1,27 @@
 #pragma once
-
 #include <cstddef>
 #include <functional>
 
-#include <stat/core/hashing/hash_combine.hpp>
-#include <stat/probability/graphical/assignment.hpp>
+namespace stat::core::hashing {
 
-namespace std {
-
-template <typename Value>
-struct hash<stat::prob::graphical::assignment<Value>> {
+template<typename Value>
+struct assignment_hash {
     std::size_t operator()(
         const stat::prob::graphical::assignment<Value>& a
-    ) const noexcept
-    {
+    ) const noexcept {
+
         std::size_t seed = 0;
 
-        for (const auto& [var, val] : a.values()) {
-            std::size_t pair_hash = 0;
+        for (const auto& [k, v] : a.values()) {
+            seed ^= std::hash<std::size_t>{}(k)
+                  + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 
-            stat::core::hashing::hash_combine(pair_hash, var);
-            stat::core::hashing::hash_combine(pair_hash, val);
-
-            stat::core::hashing::hash_combine(seed, pair_hash);
+            seed ^= std::hash<Value>{}(v)
+                  + 0x9e3779b9 + (seed << 6) + (seed >> 2);
         }
 
         return seed;
     }
 };
 
-} // namespace std
+} // namespace stat::core::hashing
