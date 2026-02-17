@@ -2,6 +2,8 @@
 #include <cstddef>
 #include <functional>
 
+#include <stat/probability/graphical/assignment.hpp> 
+
 namespace stat::core::hashing {
 
 template<typename Value>
