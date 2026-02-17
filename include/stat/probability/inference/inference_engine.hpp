@@ -3,10 +3,11 @@
 #include <vector>
 #include <unordered_map>
 #include <concepts>
+#include <cstddef>
 
 #include <stat/probability/graphical/graph.hpp>
 #include <stat/probability/graphical/assignment.hpp>
-
+#include <stat/core/hashing/assignment_hash.hpp>
 
 namespace stat::probability::inference {
 
@@ -23,10 +24,18 @@ struct Query {
 
 // Result of an inference query
 struct InferenceResult {
+
     using Assignment =
         stat::prob::graphical::assignment<std::size_t>;
 
-    std::unordered_map<Assignment, double> distribution;
+    using Hasher =
+        stat::core::hashing::assignment_hash<std::size_t>;
+
+    std::unordered_map<
+        Assignment,
+        double,
+        Hasher
+    > distribution;
 
     void normalize();
 };
