@@ -52,11 +52,11 @@ class assignment {
             return values_;
         }
 
-        T& operator[](std::size_t var) {
+        Value& operator[](std::size_t var) {
             return values_[var];
         }
 
-        const T& operator[](std::size_t var) const {
+        const Value& operator[](std::size_t var) const {
             return values_.at(var);
         }
 
