@@ -45,3 +45,5 @@ public:
 };
 
 } // namespace stat::prob::inference
+
+#include "inference_result.inl"
