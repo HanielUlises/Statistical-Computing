@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 #include "bayesian_network.hpp"
 
 namespace stat::prob::graphical {
@@ -28,6 +30,12 @@ void BayesianNetwork<Variable>::add_edge(
     const Variable& parent,
     const Variable& child)
 {
+    if (!contains(parent) || !contains(child)) {
+        throw std::logic_error(
+            "BayesianNetwork::add_edge(): variable not registered"
+        );
+    }
+
     parents_[child].push_back(parent);
 }
 
