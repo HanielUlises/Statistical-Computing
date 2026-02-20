@@ -39,4 +39,19 @@ void BayesianNetwork<Variable>::add_edge(
     parents_[child].push_back(parent);
 }
 
+template <typename Variable>
+void BayesianNetwork<Variable>::set_cpt(
+    const Variable& var,
+    Factor cpt)
+{
+    if (!contains(var)) {
+        throw std::logic_error(
+            "BayesianNetwork::set_cpt(): variable not registered"
+        );
+    }
+
+    cpts_[var] = std::move(cpt);
+}
+
+
 } // namespace stat::prob::graphical
