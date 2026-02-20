@@ -37,6 +37,11 @@ void BayesianNetwork<Variable>::add_edge(
     }
 
     parents_[child].push_back(parent);
+
+    if (has_cycle()) {
+        parents_[child].pop_back();
+        throw std::logic_error("Cycle detected");
+    }
 }
 
 template <typename Variable>
@@ -81,5 +86,37 @@ void BayesianNetwork<Variable>::set_cpt(
     }
 }
 
+template <typename Variable>
+bool BayesianNetwork<Variable>::has_cycle() const
+{
+    enum class Mark { None, Temp, Perm };
+
+    std::unordered_map<Variable, Mark> marks;
+
+    std::function<bool(const Variable&)> visit =
+        [&](const Variable& v)
+    {
+        if (marks[v] == Mark::Temp) return true;
+        if (marks[v] == Mark::Perm) return false;
+
+        marks[v] = Mark::Temp;
+
+        auto it = parents_.find(v);
+        if (it != parents_.end()) {
+            for (const auto& p : it->second) {
+                if (visit(p)) return true;
+            }
+        }
+
+        marks[v] = Mark::Perm;
+        return false;
+    };
+
+    for (const auto& v : variables_) {
+        if (visit(v)) return true;
+    }
+
+    return false;
+}
 
 } // namespace stat::prob::graphical

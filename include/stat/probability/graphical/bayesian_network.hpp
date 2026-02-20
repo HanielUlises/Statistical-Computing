@@ -33,6 +33,8 @@ class BayesianNetwork {
         void add_edge(const Variable& parent, const Variable& child);
 
         void set_cpt(const Variable& var, Factor cpt);
+
+        bool has_cycle() const;
     private:
         std::unordered_set<Variable> variables_;
         std::unordered_map<Variable, std::vector<Variable>> parents_;
