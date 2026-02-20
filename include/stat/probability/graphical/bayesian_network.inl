@@ -51,6 +51,22 @@ void BayesianNetwork<Variable>::set_cpt(
     }
 
     cpts_[var] = std::move(cpt);
+
+    const auto& scope = cpt.variables();
+
+    if (std::find(scope.begin(), scope.end(), var) == scope.end()) {
+        throw std::logic_error(
+            "CPT must contain the variable itself"
+        );
+    }
+
+    for (const auto& parent : parents_[var]) {
+        if (std::find(scope.begin(), scope.end(), parent) == scope.end()) {
+            throw std::logic_error(
+                "CPT missing parent variable"
+            );
+        }
+    }
 }
 
 
