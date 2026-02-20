@@ -119,4 +119,17 @@ bool BayesianNetwork<Variable>::has_cycle() const
     return false;
 }
 
+template <typename Variable>
+std::vector<typename BayesianNetwork<Variable>::Factor>
+BayesianNetwork<Variable>::factors() const
+{
+    std::vector<Factor> result;
+
+    for (const auto& [var, cpt] : cpts_) {
+        result.push_back(cpt);
+    }
+
+    return result;
+}
+
 } // namespace stat::prob::graphical

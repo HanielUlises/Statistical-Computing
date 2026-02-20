@@ -35,6 +35,11 @@ class BayesianNetwork {
         void set_cpt(const Variable& var, Factor cpt);
 
         bool has_cycle() const;
+
+        const auto& parents(const Variable& v) const;
+        const auto& cpt(const Variable& v) const;
+
+        std::vector<Factor> factors() const;
     private:
         std::unordered_set<Variable> variables_;
         std::unordered_map<Variable, std::vector<Variable>> parents_;
