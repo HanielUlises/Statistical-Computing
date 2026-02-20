@@ -23,4 +23,12 @@ BayesianNetwork<Variable>::variables() const noexcept
     return variables_;
 }
 
+template <typename Variable>
+void BayesianNetwork<Variable>::add_edge(
+    const Variable& parent,
+    const Variable& child)
+{
+    parents_[child].push_back(parent);
+}
+
 } // namespace stat::prob::graphical
