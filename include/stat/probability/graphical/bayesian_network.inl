@@ -67,6 +67,18 @@ void BayesianNetwork<Variable>::set_cpt(
             );
         }
     }
+
+    for (const auto& v : scope) {
+        if (v != var &&
+            std::find(parents_[var].begin(),
+                    parents_[var].end(),
+                    v) == parents_[var].end())
+        {
+            throw std::logic_error(
+                "CPT contains extraneous variable"
+            );
+        }
+    }
 }
 
 
